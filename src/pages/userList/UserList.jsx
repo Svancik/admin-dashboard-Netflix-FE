@@ -1,6 +1,6 @@
 import "./userList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { userRows } from "../../../dummyData";
+import { userRows } from "../../dummyData";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -9,13 +9,11 @@ export default function UserList() {
   const [data, setData] = useState(userRows);
   // Problém - setData nemění data při handleDelete
 
+  console.log("data: ", data);
+
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
-
-  useEffect(() => {
-    alert(data.length);
-  }, [data]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
