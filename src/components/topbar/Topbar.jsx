@@ -2,12 +2,16 @@ import React from "react";
 import "./topbar.css";
 
 import { Language, Settings, NotificationsNone } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+
 export default function Topbar() {
   return (
     <div className="topbar">
       <div className="topbarWraper">
         <div className="topLeft">
-          <span className="logo">radekadmin</span>
+          <Link to="/" className="logo">
+            radekadmin
+          </Link>
         </div>
         <div className="topRight">
           <div className="topbarIconContainer">

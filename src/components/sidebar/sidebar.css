@@ -31,6 +31,7 @@
     display: flex;
     align-items: center;
     border-radius: 10px;
+    text-decoration: none;
 }
 
 /* Pomocí kódu níže nastavíme hover efekt & efekt pro vybranou stránku*/

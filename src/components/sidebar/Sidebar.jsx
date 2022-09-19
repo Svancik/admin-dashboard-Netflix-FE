@@ -40,7 +40,6 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            {/* NEFUNGUJE STRÁNKA PŘI POUŽITÍ NAGIATE TO / LINK TO */}
             <Link to="/users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />

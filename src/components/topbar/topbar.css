@@ -21,6 +21,7 @@
     color: darkblue;
     cursor: pointer;
     margin-left: 15px;
+    text-decoration: none;
 }
 
 .topRight{

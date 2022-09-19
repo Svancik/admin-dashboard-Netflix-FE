@@ -11,18 +11,18 @@ import NewUser from './pages/newUser/NewUser';
 function App() {
   return (
     <>
-    <Topbar/>
-    <div className='container'>
     <BrowserRouter>
+    <Topbar/>
+      <div className='container'>
     <Sidebar/>    
       <Routes>
          <Route path="/" exact element={<Home/>}/>
          <Route path="/users" element={<UserList/>}/>
          <Route path="/user/:userId" element={<User/>}/>
          <Route path="/newUser" element={<NewUser/>}/>
-      </Routes>
-    </BrowserRouter>
+      </Routes>    
     </div>
+    </BrowserRouter>
     </>
   );
 }
