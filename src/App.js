@@ -1,11 +1,3 @@
-/*
-TODO:
-
-- handleDelete nefunkcni
-
-*/
-
-
 import Topbar from './components/topbar/Topbar';
 import Sidebar from './components/sidebar/Sidebar';
 import "./app.css";

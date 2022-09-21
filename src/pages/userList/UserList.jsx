@@ -1,21 +1,22 @@
 import "./userList.css";
+import React, { Component } from "react";
+
 import { DataGrid } from "@mui/x-data-grid";
 import { userRows } from "../../dummyData";
 import { DeleteOutline } from "@mui/icons-material";
-import { Link, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function UserList() {
-  const [data, setData] = useState(userRows);
-  // Problém - setData nemění data při handleDelete
-
-  console.log("data: ", data);
-
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+class UserList extends Component {
+  state = {
+    users: userRows,
   };
 
-  const columns = [
+  handleDelete = (id) => {
+    const users = this.state.users.filter((u) => u.id !== id);
+    this.setState({ users });
+  };
+
+  columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "user",
@@ -25,7 +26,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} />
+            <img alt="user" gclassName="userListImg" src={params.row.avatar} />
             {params.row.username}
           </div>
         );
@@ -56,23 +57,26 @@ export default function UserList() {
             </Link>
             <DeleteOutline
               className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => this.handleDelete(params.row.id)}
             />
           </>
         );
       },
     },
   ];
-  return (
-    <div className="userList">
-      <DataGrid
-        rows={userRows}
-        columns={columns}
-        disableSelectionOnClick
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </div>
-  );
+  render() {
+    return (
+      <div className="userList">
+        <DataGrid
+          rows={this.state.users}
+          columns={this.columns}
+          disableSelectionOnClick
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+        />
+      </div>
+    );
+  }
 }
+export default UserList;

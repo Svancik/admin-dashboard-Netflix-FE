@@ -1,19 +1,17 @@
 import "./productList.css";
+import React, { Component } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { productRows } from "../../dummyData";
 import { DeleteOutline } from "@mui/icons-material";
-import { Link, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function ProductList() {
-    // Problém - setData nemění data při delete =>stejné jako UserList.jsx
-    const [data, setData] = useState(productRows);
+class ProductList extends Component {
+  // Problém - setData nemění data při delete =>stejné jako UserList.jsx
+  state = {
+    products: productRows,
+  };
 
-  {
-    /* Vytvořit komponentu pro handleDelete (opakuje se v UserList.jsx)*/
-  }
-
-  const columns = [
+  columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "product",
@@ -23,7 +21,11 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} />
+            <img
+              alt="Apple Airpods"
+              className="productListImg"
+              src={params.row.img}
+            />
             {params.row.name}
           </div>
         );
@@ -54,7 +56,7 @@ export default function ProductList() {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => this.handleDelete(params.row.id)}
             />
           </>
         );
@@ -62,21 +64,24 @@ export default function ProductList() {
     },
   ];
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  handleDelete = (id) => {
+    const products = this.state.products.filter((u) => u.id !== id);
+    this.setState({ products });
   };
-
-  return (
-    <div className="productList">
-      {" "}
-      <DataGrid
-        rows={productRows}
-        columns={columns}
-        disableSelectionOnClick
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
-    </div>
-  );
+  render() {
+    return (
+      <div className="productList">
+        {" "}
+        <DataGrid
+          rows={this.state.products}
+          columns={this.columns}
+          disableSelectionOnClick
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+        />
+      </div>
+    );
+  }
 }
+export default ProductList;
