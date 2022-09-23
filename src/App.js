@@ -10,6 +10,8 @@ import Product from './pages/product/Product';
 import ProductList from './pages/productList/ProductList';
 import NewProduct from './pages/newProduct/NewProduct';
 
+import { userData } from './dummyData';
+
 function App() {
   return (
     <>
