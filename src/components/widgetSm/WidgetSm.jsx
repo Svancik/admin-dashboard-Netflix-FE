@@ -1,89 +1,49 @@
 import "./widgetSm.css";
 import { Visibility } from "@mui/icons-material";
+import { useState, useEffect } from "react";
+import axios from "axios";
 export default function WidgetSm() {
+  const [newUsers, setNewUsers] = useState([]);
+
+  useEffect(() => {
+    const getNewUsers = async () => {
+      try {
+        const res = await axios.get("/users?new=true", {
+          headers: {
+            token: process.env.REACT_APP_TOKEN,
+          },
+        });
+        setNewUsers(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getNewUsers();
+  }, []);
+  console.log("users: ", newUsers);
   return (
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
-        <li className="widgetSmListItem">
-          <img
-            src="https://akns-images.eonline.com/eol_images/Entire_Site/2016124/rs_600x600-160224090109-600.bale.cm.22416.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
-            alt=""
-            className="widgetSmImg"
-          />
-          <div className="widgetSmUser">
-            <span className="widgetSmUsername">Patrick Bateman</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
-          </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
-        </li>
-
-        <li className="widgetSmListItem">
-          <img
-            src="https://akns-images.eonline.com/eol_images/Entire_Site/2016124/rs_600x600-160224090109-600.bale.cm.22416.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
-            alt=""
-            className="widgetSmImg"
-          />
-          <div className="widgetSmUser">
-            <span className="widgetSmUsername">Patrick Bateman</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
-          </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
-        </li>
-
-        <li className="widgetSmListItem">
-          <img
-            src="https://akns-images.eonline.com/eol_images/Entire_Site/2016124/rs_600x600-160224090109-600.bale.cm.22416.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
-            alt=""
-            className="widgetSmImg"
-          />
-          <div className="widgetSmUser">
-            <span className="widgetSmUsername">Patrick Bateman</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
-          </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
-        </li>
-
-        <li className="widgetSmListItem">
-          <img
-            src="https://akns-images.eonline.com/eol_images/Entire_Site/2016124/rs_600x600-160224090109-600.bale.cm.22416.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
-            alt=""
-            className="widgetSmImg"
-          />
-          <div className="widgetSmUser">
-            <span className="widgetSmUsername">Patrick Bateman</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
-          </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
-        </li>
-
-        <li className="widgetSmListItem">
-          <img
-            src="https://akns-images.eonline.com/eol_images/Entire_Site/2016124/rs_600x600-160224090109-600.bale.cm.22416.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
-            alt=""
-            className="widgetSmImg"
-          />
-          <div className="widgetSmUser">
-            <span className="widgetSmUsername">Patrick Bateman</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
-          </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
-        </li>
+        {newUsers.map((user) => (
+          <li className="widgetSmListItem">
+            <img
+              src={
+                user.profilePic ||
+                "https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg"
+              }
+              alt=""
+              className="widgetSmImg"
+            />
+            <div className="widgetSmUser">
+              <span className="widgetSmUsername">{user.username}</span>
+            </div>
+            <button className="widgetSmButton">
+              <Visibility className="widgetSmIcon" />
+              Display
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   );

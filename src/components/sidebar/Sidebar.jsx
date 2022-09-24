@@ -4,7 +4,6 @@ import {
   Timeline,
   TrendingUp,
   PermIdentity,
-  Storefront,
   AttachMoney,
   BarChart,
   MailOutline,
@@ -12,6 +11,7 @@ import {
   ChatBubbleOutline,
   WorkOutline,
   Report,
+  PlayCircleOutline,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
@@ -48,10 +48,10 @@ export default function Sidebar() {
                 Users
               </li>
             </Link>
-            <Link to="/products" className="link">
+            <Link to="/movies" className="link">
               <li className="sidebarListItem">
-                <Storefront className="sidebarIcon" />
-                Products
+                <PlayCircleOutline className="sidebarIcon" />
+                Movies
               </li>
             </Link>
 
