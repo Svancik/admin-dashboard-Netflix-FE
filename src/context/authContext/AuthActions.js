@@ -1,5 +1,5 @@
+//login
 // Pokud jsou přihlašovací údaje ok: status=success, pokud ne tak: status=failure
-
 export const loginStart = () =>({
     type:"LOGIN_START",
 });
@@ -13,3 +13,10 @@ export const loginSuccess = (user) =>({
 export const loginFailure = () =>({
     type:"LOGIN_FAILURE",
 });
+
+
+//logout
+export const logout = () =>({
+    type:"LOGOUT",
+});
+
