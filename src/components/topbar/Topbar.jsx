@@ -1,7 +1,12 @@
 import React from "react";
 import "./topbar.css";
 
-import { Language, Settings, NotificationsNone } from "@mui/icons-material";
+import {
+  Language,
+  Settings,
+  NotificationsNone,
+  ArrowDropDown,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 export default function Topbar() {

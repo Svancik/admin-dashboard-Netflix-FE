@@ -57,3 +57,28 @@
     border-radius: 50%;
     cursor: pointer;
  }
+
+ .profile{
+    padding-right: 3rem;
+ }
+
+ .profile > .options {
+        display: none;
+        flex-direction: column;
+        position: absolute; /* Díky tomuto neposouváme šipku menu při hoveru na ni */
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+    }
+
+
+    
+.options > span {
+    padding: 10px;    
+    cursor: pointer;
+}
+
+.profile:hover > .options{
+        display: flex;    
+}
+
