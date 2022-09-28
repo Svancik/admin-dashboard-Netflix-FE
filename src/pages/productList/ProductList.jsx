@@ -1,49 +1,42 @@
 import "./productList.css";
-import React, { Component } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { productRows } from "../../dummyData";
 import { DeleteOutline } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { MovieContext } from "./../../context/movieContext/MovieContext";
+import { getMovies } from "./../../context/movieContext/apiCalls";
 
-class ProductList extends Component {
-  // Problém - setData nemění data při delete =>stejné jako UserList.jsx
-  state = {
-    products: productRows,
-  };
+/* Pokračovat 3:22:37 => na GITHUB nahrát movie fetch commit */
 
-  columns = [
-    { field: "id", headerName: "ID", width: 90 },
+export default function ProductList() {
+  const [data, setData] = useState(productRows);
+  const { movies, dispatch } = useContext(MovieContext);
+
+  useEffect(() => {
+    getMovies(dispatch);
+  }, [dispatch]);
+
+  const columns = [
+    { field: "_id", headerName: "ID", width: 220 },
     {
-      field: "product",
-      headerName: "Product",
-      width: 200,
+      field: "movie",
+      headerName: "Movie",
+      width: 220,
       /* Pomocí kódu renderCell níže vyrenderujeme individuální data např jako img a použijem k tomu data tabulky (url z bunky řádku) */
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img
-              alt="Apple Airpods"
-              className="productListImg"
-              src={params.row.img}
-            />
-            {params.row.name}
+            <img className="productListImg" src={params.row.img} />
+            {params.row.title}
           </div>
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
-    {
-      field: "status",
-      headerName: "Status",
-      type: "number",
-      width: 120,
-    },
-    {
-      field: "price",
-      headerName: "Price Volume",
-      type: "number",
-      width: 160,
-    },
+    { field: "genre", headerName: "Genre", width: 120 },
+    { field: "year", headerName: "Year", width: 70 },
+    { field: "limit", headerName: "Limit", width: 70 },
+    { field: "isSeries", headerName: "isSeries", width: 70 },
     {
       field: "action",
       headerName: "Action",
@@ -56,7 +49,7 @@ class ProductList extends Component {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => this.handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row.id)}
             />
           </>
         );
@@ -64,24 +57,22 @@ class ProductList extends Component {
     },
   ];
 
-  handleDelete = (id) => {
-    const products = this.state.products.filter((u) => u.id !== id);
-    this.setState({ products });
+  const handleDelete = (id) => {
+    setData(data.filter((item) => item.id !== id));
   };
-  render() {
-    return (
-      <div className="productList">
-        {" "}
-        <DataGrid
-          rows={this.state.products}
-          columns={this.columns}
-          disableSelectionOnClick
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-        />
-      </div>
-    );
-  }
+
+  return (
+    <div className="productList">
+      {" "}
+      <DataGrid
+        rows={movies}
+        columns={columns}
+        disableSelectionOnClick
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        getRowId={(r) => r._id}
+      />
+    </div>
+  );
 }
-export default ProductList;

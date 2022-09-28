@@ -4,24 +4,21 @@ const MovieReducer = (state, action) =>{
         // níže je returnován obj {} Initial State
         case "GET_MOVIES_START":
             return {
-                movies: [],
-                isFetching: true,
-                error: false
+              movies: [],
+              isFetching: true,
+              error: false,
             };
-
-        case "GET_MOVIES_SUCCESS":
+          case "GET_MOVIES_SUCCESS":
             return {
-                //z AuthActions dáváme jako payload obj moviesa který nám vrací server / route
-                movies: action.payload,
-                isFetching: false,
-                error: false
+              movies: action.payload,
+              isFetching: false,
+              error: false,
             };
-            
-        case "GET_MOVIES_FAILURE":
+          case "GET_MOVIES_FAILURE":
             return {
-                movies: [],
-                isFetching: true,
-                error: true
+              movies: [],
+              isFetching: false,
+              error: true,
             };
     }
 }
