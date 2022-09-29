@@ -30,9 +30,9 @@ function App() {
          <Route path="/users" element={<><Topbar/><div className='container'><Sidebar/><UserList/></div></>}/>   
          <Route path="/user/:userId" element={<><Topbar/><div className='container'><Sidebar/><User/></div></>}/>   
          <Route path="/movies" element={<><Topbar/><div className='container'><Sidebar/><ProductList/></div></>}/>   
-         <Route path="/product/:productId" element={<><Topbar/><div className='container'><Sidebar/><Product/></div></>}/>   
+         <Route path="/movie/:movieId" element={<><Topbar/><div className='container'><Sidebar/><Product/></div></>}/>   
          <Route path="/newUser" element={<><Topbar/><div className='container'><Sidebar/><NewUser/></div></>}/>   
-         <Route path="/newProduct" element={<><Topbar/><div className='container'><Sidebar/><NewProduct/></div></>}/>   
+         <Route path="/newMovie" element={<><Topbar/><div className='container'><Sidebar/><NewProduct/></div></>}/>   
          </>}
       </Routes>    
     </BrowserRouter>
