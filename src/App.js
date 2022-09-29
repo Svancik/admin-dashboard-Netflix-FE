@@ -21,8 +21,11 @@ function App() {
     <>
     <BrowserRouter> 
       <Routes>
-        <Route path="/login" element={user ? <Navigate to ="/"/> : <Login/> } /> 
-        {user &&<>
+        {!user &&<>      
+         <Route path="/" exact element={<Login/> } /> 
+        <Route path="/login" element={<Login/> } /> 
+        </>}
+        {user && <>
          <Route path="/" exact element={<><Topbar/><div className='container'><Sidebar/><Home/></div></>}/>       
          <Route path="/users" element={<><Topbar/><div className='container'><Sidebar/><UserList/></div></>}/>   
          <Route path="/user/:userId" element={<><Topbar/><div className='container'><Sidebar/><User/></div></>}/>   
