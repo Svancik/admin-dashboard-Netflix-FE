@@ -5,7 +5,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Link, Navigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { MovieContext } from "./../../context/movieContext/MovieContext";
-import { getMovies } from "./../../context/movieContext/apiCalls";
+import { deleteMovie, getMovies } from "./../../context/movieContext/apiCalls";
 
 /* Pokračovat 3:22:37 => na GITHUB nahrát movie fetch commit */
 
@@ -49,7 +49,7 @@ export default function ProductList() {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row._id)}
             />
           </>
         );
@@ -58,7 +58,8 @@ export default function ProductList() {
   ];
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    //setData(data.filter((item) => item.id !== id));
+    deleteMovie(id, dispatch);
   };
 
   return (
