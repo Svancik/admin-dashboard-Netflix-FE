@@ -1,15 +1,32 @@
 
-import { getMoviesStart, getMoviesFailure, getMoviesSuccess } from './MovieActions';
+import { getMoviesStart, getMoviesFailure, getMoviesSuccess, deleteMovieStart, deleteMovieSuccess, deleteMovieFailure } from './MovieActions';
+import axios from "axios";
+// get movie
+export const getMovies = async (dispatch) => {
+    dispatch(getMoviesStart());
+    try {
+      const res = await axios.get("/movies", {
+        headers: {
+          token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },        
+      });      
+      dispatch(getMoviesSuccess(res.data));
+    } catch (err) {
+      dispatch(getMoviesFailure());
+    }
+  };
 
-export const getMovies = async (dispatch) =>{
-getMoviesStart();
-try{
-    const res = axios.get("/movies", {headers: 
-        {token: "Bearer" + localStorage.getItem("user").accesToken}¨
-        
-    });
-dispatch(getMoviesSuccess(res.data));
-} catch(err){
-    dispatch(getMoviesFailure());
-}
-}
+  //delete movie
+  export const deleteMovie = async (id, dispatch) => {
+    dispatch(deleteMovieStart());
+    try {
+       await axios.delete("/movies/"+id, {
+        headers: {
+          token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },        
+      });      
+      dispatch(deleteMovieSuccess(id));
+    } catch (err) {
+      dispatch(deleteMovieFailure());
+    }
+  };
