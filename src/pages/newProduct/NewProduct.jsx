@@ -1,6 +1,7 @@
 import "./newProduct.css";
 import { useState } from "react";
 import storage from "../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
@@ -16,24 +17,40 @@ export default function NewProduct() {
     setMovie({ ...movie, [e.target.name]: value });
   };
 
+  //upravit kód níže podle video 03:07:10
+  //https://www.youtube.com/watch?v=CCF-xV3RSSs&ab_channel=LamaDev
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
-      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+      const storageRef = ref(storage, "items/" + fileName);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
         },
         (error) => {
           console.log(error);
         },
         () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setMovie((prev) => {
-              return { ...prev, [item.label]: url };
+              return { ...prev, [item.label]: downloadURL };
             });
             setUploaded((prev) => prev + 1);
           });
