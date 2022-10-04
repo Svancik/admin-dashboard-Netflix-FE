@@ -1,6 +1,9 @@
 import "./newProduct.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import storage from "../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { createMovie } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "./../../context/movieContext/MovieContext";
 
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
@@ -11,29 +14,49 @@ export default function NewProduct() {
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
 
+  const { dispatch } = useContext(MovieContext);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
 
+
+  //TODO: Stejným způsobem provést edit jako probíhá create (nového movie pomocí formuláře)
+  // 4:07:00 vysvětluje jak na to
+
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
-      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+      const storageRef = ref(storage, "items/" + fileName);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
         },
         (error) => {
           console.log(error);
         },
         () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setMovie((prev) => {
-              return { ...prev, [item.label]: url };
+              return { ...prev, [item.label]: downloadURL };
             });
             setUploaded((prev) => prev + 1);
           });
@@ -53,7 +76,10 @@ export default function NewProduct() {
     ]);
   };
 
-  console.log(movie);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createMovie(movie, dispatch);
+  };
 
   return (
     <div className="newProduct">
@@ -165,7 +191,9 @@ export default function NewProduct() {
         </div>
         <>
           {uploaded === 5 ? (
-            <button className="addProductButton">Create</button>
+            <button className="addProductButton" onClick={handleSubmit}>
+              Create
+            </button>
           ) : (
             <button className="addProductButton" onClick={handleUpload}>
               Upload
