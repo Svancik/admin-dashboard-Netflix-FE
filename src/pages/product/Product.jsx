@@ -48,6 +48,8 @@ export default function Product() {
           <div className="productFormLeft">
             <label>Movie Title</label>
             <input type="text" placeholder={movie.title} />
+            <label>Movie Description</label>
+            <textarea rows="10" placeholder={movie.desc} />
             <label>Year</label>
             <input type="text" placeholder={movie.year} />
             <label>Genre</label>

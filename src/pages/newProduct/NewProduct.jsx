@@ -1,7 +1,9 @@
 import "./newProduct.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import storage from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { createMovie } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "./../../context/movieContext/MovieContext";
 
 export default function NewProduct() {
   const [movie, setMovie] = useState(null);
@@ -12,13 +14,17 @@ export default function NewProduct() {
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
 
+  const { dispatch } = useContext(MovieContext);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
 
-  //upravit kód níže podle video 03:07:10
-  //https://www.youtube.com/watch?v=CCF-xV3RSSs&ab_channel=LamaDev
+
+  //TODO: Stejným způsobem provést edit jako probíhá create (nového movie pomocí formuláře)
+  // 4:07:00 vysvětluje jak na to
+
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
@@ -70,7 +76,10 @@ export default function NewProduct() {
     ]);
   };
 
-  console.log(movie);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createMovie(movie, dispatch);
+  };
 
   return (
     <div className="newProduct">
@@ -182,7 +191,9 @@ export default function NewProduct() {
         </div>
         <>
           {uploaded === 5 ? (
-            <button className="addProductButton">Create</button>
+            <button className="addProductButton" onClick={handleSubmit}>
+              Create
+            </button>
           ) : (
             <button className="addProductButton" onClick={handleUpload}>
               Upload
