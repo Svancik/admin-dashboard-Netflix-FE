@@ -26,10 +26,11 @@ export default function Product() {
     setMovie({ ...movie, [e.target.name]: value });
   };
 
-  //TODO: Stejným způsobem provést edit jako probíhá create (nového movie pomocí formuláře)
+  //TODO: Nastavit náhled obrázku před jeho oficiálním uploadem na server dle videa zde - https://www.youtube.com/watch?v=o2nmgbZaGMw&ab_channel=RahulAhire
   // 4:07:00 vysvětluje jak na to
 
   const upload = (items) => {
+    console.log(items);
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
       const storageRef = ref(storage, "items/" + fileName);
@@ -84,7 +85,6 @@ export default function Product() {
     e.preventDefault();
     createMovie(movie, dispatch);
   };
-  console.log("movie:", loadedMovie);
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -134,7 +134,7 @@ export default function Product() {
                   alt=""
                   className="productUploadImg"
                 />
-                <label for="file">
+                <label for="img">
                   <Publish />
                 </label>
                 <input
@@ -154,14 +154,14 @@ export default function Product() {
                   alt=""
                   className="productUploadImg"
                 />
-                <label for="file">
+                <label for="imgTitle">
                   <Publish />
                 </label>
                 <input
                   type="file"
                   id="imgTitle"
                   name="imgTitle"
-                  onChange={(e) => setImg(e.target.files[0])}
+                  onChange={(e) => setImgTitle(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -175,14 +175,14 @@ export default function Product() {
                   alt=""
                   className="productUploadImg"
                 />
-                <label for="file">
+                <label for="imgSm">
                   <Publish />
                 </label>
                 <input
                   type="file"
                   id="imgSm"
                   name="imgSm"
-                  onChange={(e) => setImg(e.target.files[0])}
+                  onChange={(e) => setImgSm(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -257,14 +257,14 @@ export default function Product() {
                   alt=""
                   className="productUploadImg"
                 />
-                <label for="file">
+                <label for="trailer">
                   <Publish />
                 </label>
                 <input
                   type="file"
                   id="trailer"
                   name="trailer"
-                  onChange={(e) => setImg(e.target.files[0])}
+                  onChange={(e) => setTrailer(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -278,14 +278,14 @@ export default function Product() {
                   alt=""
                   className="productUploadImg"
                 />
-                <label for="file">
+                <label for="video">
                   <Publish />
                 </label>
                 <input
                   type="file"
                   id="video"
                   name="video"
-                  onChange={(e) => setImg(e.target.files[0])}
+                  onChange={(e) => setVideo(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -293,7 +293,7 @@ export default function Product() {
             <>
               {uploaded === 5 ? (
                 <button className="addProductButton" onClick={handleSubmit}>
-                  Create
+                  Update
                 </button>
               ) : (
                 <button className="addProductButton" onClick={handleUpload}>

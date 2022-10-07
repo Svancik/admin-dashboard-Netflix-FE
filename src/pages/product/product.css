@@ -20,6 +20,13 @@
     cursor: pointer;
 }
 
+.productUpload > label{
+cursor: pointer;
+}
+
+
+
+
 .productTop{
     display: flex;
 }

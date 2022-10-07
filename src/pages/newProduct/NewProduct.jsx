@@ -21,11 +21,11 @@ export default function NewProduct() {
     setMovie({ ...movie, [e.target.name]: value });
   };
 
-
   //TODO: Stejným způsobem provést edit jako probíhá create (nového movie pomocí formuláře)
   // 4:07:00 vysvětluje jak na to
 
   const upload = (items) => {
+    console.log(items);
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
       const storageRef = ref(storage, "items/" + fileName);
