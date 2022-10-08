@@ -48,15 +48,15 @@ export const getListsFailure = () =>({
 
 
 
-// export const deleteListStart = () =>({
-//     type:"DELETE_LIST_START",
-// });
+export const deleteListStart = () =>({
+    type:"DELETE_LIST_START",
+});
 
-// export const deleteListSuccess = (id) =>({
-//     type:"DELETE_LIST_SUCCESS",
-//     payload: id,
-// });
+export const deleteListSuccess = (id) =>({
+    type:"DELETE_LIST_SUCCESS",
+    payload: id,
+});
 
-// export const deleteListFailure = () =>({
-//     type:"DELETE_LIST_FAILURE",
-// });
+export const deleteListFailure = () =>({
+    type:"DELETE_LIST_FAILURE",
+});

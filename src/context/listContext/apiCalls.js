@@ -1,5 +1,5 @@
 
-import { getListsStart, getListsSuccess, getListsFailure  } from './ListActions';
+import { getListsStart, getListsSuccess, getListsFailure, deleteListStart, deleteListSuccess, deleteListFailure } from './ListActions';
 import axios from "axios";
 // get movie
 export const getLists = async (dispatch) => {
@@ -30,20 +30,20 @@ export const getLists = async (dispatch) => {
 //       }
 //     };
 
-  // //delete movie
-  // export const deleteList = async (id, dispatch) => {
-  //   dispatch(deleteMovieStart());
-  //   try {
-  //      await axios.delete("/movies/"+id, {
-  //       headers: {
-  //         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-  //       },        
-  //     });      
-  //     dispatch(deleteMovieSuccess(id));
-  //   } catch (err) {
-  //     dispatch(deleteMovieFailure());
-  //   }
-  // };
+  //delete movie
+  export const deleteList = async (id, dispatch) => {
+    dispatch(deleteListStart());
+    try {
+       await axios.delete("/lists/"+id, {
+        headers: {
+          token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },        
+      });      
+      dispatch(deleteListSuccess(id));
+    } catch (err) {
+      dispatch(deleteListFailure());
+    }
+  };
 
 //   export const updateMovie = async (id, dispatch) => {
 //     dispatch(updateMovieStart());
