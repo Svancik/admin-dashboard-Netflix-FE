@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import storage from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { createMovie } from "../../context/movieContext/apiCalls";
-import { MovieContext } from "./../../context/movieContext/MovieContext";
+import { MovieContext } from "../../context/movieContext/MovieContext";
 
 export default function Product() {
   const location = useLocation();
@@ -69,8 +69,6 @@ export default function Product() {
       );
     });
   };
-
-  console.log(loadedMovie.isSeries);
 
   const handleUpload = (e) => {
     e.preventDefault();
@@ -247,12 +245,8 @@ export default function Product() {
             <div className="addProductItem">
               <label>Is Series?</label>
               <select name="isSeries" id="active" onChange={handleChange}>
-                <option value={loadedMovie.isSeries}>
-                  {String(loadedMovie.isSeries)}
-                </option>
-                <option value={!loadedMovie.isSeries}>
-                  {String(!loadedMovie.isSeries)}
-                </option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
               </select>
             </div>
             <div className="addProductItem">
