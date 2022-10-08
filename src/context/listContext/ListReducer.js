@@ -1,7 +1,5 @@
 const ListReducer = (state, action) =>{
-    //action type jsou data z AuthActions a mohou tedy být: "LOGIN_START" "LOGIN_SUCCESS" "LOGIN_FAILURE"
     switch (action.type){
-        // níže je returnován obj {} Initial State
         case "GET_LISTS_START":
         return {
               lists: [],
@@ -20,24 +18,30 @@ const ListReducer = (state, action) =>{
               isFetching: false,
               error: true,
               }; 
-          // case "CREATE_MOVIE_START":
-          //   return {
-          //     ...state,
-          //     isFetching: true,
-          //     error: false,
-          //   };
-          // case "CREATE_MOVIE_SUCCESS":
-          //   return {
-          //     movies: [...state.movies, action.payload],
-          //     isFetching: false,
-          //     error: false,
-          //   };
-          // case "CREATE_MOVIE_FAILURE":
-          //   return {
-          //     ...state,
-          //     isFetching: false,
-          //     error: true,
-          //   };
+
+
+
+          case "CREATE_LIST_START":
+            return {
+              ...state,
+              isFetching: true,
+              error: false,
+            };
+          case "CREATE_LIST_SUCCESS":
+            return {
+              lists: [...state.lists, action.payload],
+              isFetching: false,
+              error: false,
+            };
+          case "CREATE_LIST_FAILURE":
+            return {
+              ...state,
+              isFetching: false,
+              error: true,
+            };
+
+
+
           //   case "UPLOAD_MOVIE_START":
           //     return {
           //       ...state,
@@ -56,6 +60,9 @@ const ListReducer = (state, action) =>{
           //       isFetching: false,
           //       error: true,
           //     };
+
+
+
           case "DELETE_LIST_START":
               return {
                 ...state,

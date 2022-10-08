@@ -14,6 +14,8 @@ import { useContext } from 'react';
 import { AuthContext } from './context/authContext/AuthContext';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./app.css";
+import List from './pages/list/List';
+import NewList from './pages/newList/NewList';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -34,8 +36,8 @@ function App() {
          <Route path="/movie/:movieId" element={<><Topbar/><div className='container'><Sidebar/><Product/></div></>}/>   
          <Route path="/newMovie" element={<><Topbar/><div className='container'><Sidebar/><NewProduct/></div></>}/>   
          <Route path="/lists" element={<><Topbar/><div className='container'><Sidebar/><ListList/></div></>}/>   
-         {/* <Route path="/lists/:listId" element={<><Topbar/><div className='container'><Sidebar/><Product/></div></>}/>   
-         <Route path="/newlist" element={<><Topbar/><div className='container'><Sidebar/><NewProduct/></div></>}/>   */}
+         <Route path="/list/:listId" element={<><Topbar/><div className='container'><Sidebar/><List/></div></>}/>   
+         <Route path="/newlist" element={<><Topbar/><div className='container'><Sidebar/><NewList/></div></>}/>  
          
          </>}
       </Routes>    
